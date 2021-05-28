@@ -8,7 +8,7 @@ const nextId = require("../utils/nextId");
 
 
 
-
+//Dish exists
 function dishExists(req, res, next) {
   const dishId = req.params.dishId;
   const foundDish = dishes.find((dish) => dish.id === dishId);
@@ -17,6 +17,7 @@ function dishExists(req, res, next) {
     res.locals.dishId = dishId;
     return next();
   }
+  //if the dish id is not found return an error
   return next({
     status: 404,
     message: `Dish id not found ${req.params.dishId}`,
@@ -45,7 +46,7 @@ function isValidPrice(req, res, next) {
   if (req.body.data.price < 0 || typeof req.body.data.price !== "number") {
     return next({
       status: 400,
-      message: "Field 'price' must be a number above zero",
+      message: "Dish 'price' must be a number above zero",
     });
   }
   next();
@@ -63,11 +64,12 @@ function isValidId(req, res, next) {
   next();
 }
 
-
+//List
 function list(req, res) {
   res.json({ data: dishes });
 }
 
+//Create a new dish
 function create(req, res) {
   const { data: { name, price, description, image_url } = {} } = req.body;
   const newDish = {
@@ -81,10 +83,12 @@ function create(req, res) {
   res.status(201).json({ data: newDish });
 }
 
+//read
 function read(req, res) {
   res.json({ data: res.locals.dish });
 }
 
+//Update dish
 function update(req, res) {
   const { data: { name, price, description, image_url } = {} } = req.body;
 

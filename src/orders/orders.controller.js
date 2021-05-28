@@ -27,6 +27,7 @@ function isValidOrder(req, res, next) {
   const orderBody = req.body.data;
   const requiredFields = ["deliverTo", "mobileNumber", "dishes"];
   for (const field of requiredFields) {
+    //call error if the order doesnt include a field
     if (!orderBody[field]) {
       next({
         status: 400,
@@ -41,7 +42,7 @@ function isValidOrder(req, res, next) {
 //Dish array validation
 function isValidArray(req, res, next) {
   const orderDishes = req.body.data.dishes;
-  //if dishes are not an array or are an empty array return error
+  //if dishes is not an array or is an empty array return error
   if (Array.isArray(orderDishes) === false || orderDishes < 1) {
     return next({
       status: 400,
@@ -105,11 +106,12 @@ function isPending(req, res, next) {
   next();
 }
 
-
+//List
 function list(req, res) {
   res.json({ data: orders });
 }
 
+//Create a new order
 function create(req, res) {
     const { data: { deliverTo, mobileNumber, status, dishes } = {} } = req.body;
     const newOrder = {
@@ -123,10 +125,12 @@ function create(req, res) {
     res.status(201).json({ data: newOrder });
   }
 
+//Read
 function read(req, res) {
   res.json({ data: res.locals.order });
 }
 
+//Update order
 function update(req, res) {
   const { data: { deliverTo, mobileNumber, status, dishes } = {} } = req.body;
 
@@ -138,6 +142,7 @@ function update(req, res) {
   res.json({ data: res.locals.order });
 }
 
+//Delete
 function destroy(req, res) {
   const index = orders.findIndex((order) => order.id === res.locals.orderId);
   orders.splice(index, 1);
