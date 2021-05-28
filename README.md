@@ -3,8 +3,8 @@ The grubdash project hones backend skills in setting up an API and building out 
 support to front-end developers so a demo of initial design ideas can be produced.
 
 This project tests the ability to build API's with complex validation.
-Project objectives:
 
+Project objectives:
 * Run tests from the command line.
 * Use common middleware packages.
 * Receive requests through routes.
